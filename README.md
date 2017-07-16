@@ -9,11 +9,12 @@ This the jupyter notebook for a two day course in Python for Data visualization 
 
 1. The `print` command, Hello world! and a quick walkthough Jupyter Notebooks. 
 1. The basic objects of Python: `int`, `str`, `float` and `bool`. Arithmetic operations and concatenation. The `type` function. 
+1. `str` objects. Accessing and manipulating strings.
 1. `list` objects. Slicing and indexing lists. `pop` and `insert` methods.
 
 ### Unit 1.2
 
-1. `str` objects. Accessing and manipulating strings. Mutable and immutable objects. 
+
 1. The `dict` data structure. Learning about `.keys` and `.items` methods. How to update dictionaries
 1. The `if`, `else` and `elif` construct. Conditionals. 
 1. The `for` construct. Iterating through a `list` or `string`. Using `break` to exit a loop prematurely. 
