@@ -23,4 +23,5 @@ This the jupyter notebook for a two day course in Python for Data visualization 
 ### Unit 1.3 
 1. Introducing functions. The `def` keyword. Defining and calling functions. Scope and keyword arguments. 
 1. Anonymous functions. The `lambda` keyword. 
-1. Built in Python functions: `map`, `zip` and `enumerate`. 
+1. Built in Python functions: `zip` and `enumerate`.
+1. List comprehension. 
