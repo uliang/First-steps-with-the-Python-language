@@ -55,16 +55,16 @@ def lcm(x, y):
 
 def encrypt(message, public_key):
     e, n = public_key
-    return (message**e)%n
+    return pow(message, e, n)
     
 
 def decrypt(c_message, private_key):
     d, n = private_key
-    return (c_message**d)%n
+    return pow(c_message, d, n)
 
 
 def keygen():
-    N = 100
+    N = 10
     p = randprime(2**(N/2.0), 2**N)
     q = randprime(2**(N/2.0), 2**N)
     n = p*q
