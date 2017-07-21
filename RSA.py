@@ -17,9 +17,9 @@ class RSA(object):
 
 
     def __init__(self):
-        self.p = None
-        self.q = None
         self.n = None
+        self.e = None
+        self.__d = None
         self.message = None
         self.c_message = None
 
@@ -74,6 +74,21 @@ class RSA(object):
         m, _, _ = self._gcd(x, y)
         return x*y/m
 
+    def keygen(self, N):
+        """
+        Randomly generates cryptographically insecure key pairs
+        with modulus between 2N-1 to 2N bits.
+        """
+        p = randprime(2**(N-1), 2**N)
+        q = randprime(2**(N-1), 2**N)
+        self.n = p*q
+
+        lambda_n = self._lcm(p-1, q-1)
+
+        self.e = self._coprimeGen(lambda_n) # public exponent
+        self.__d = self._multpInv(self.e, lambda_n) # private exponent
+
+        return None
 
     def encrypt(self, message):
 
@@ -88,25 +103,13 @@ class RSA(object):
 
         return None
 
-
     def decrypt(self):
         if self.message is None:
             raise ValueError("No message to decrypt")
-        return pow(self.c_message, self.d, self.n)
+        return pow(self.c_message, self.__d, self.n)
 
+    def get_public_key(self):
+        return (self.e, self.n)
 
-    def keygen(self, N):
-        """
-        Generates cryptographically insecure key pairs with modulus between
-        2N-1 to 2N bits.
-        """
-        self.p = randprime(2**(N-1), 2**N)
-        self.q = randprime(2**(N-1), 2**N)
-        self.n = self.p*self.q
-
-        lambda_n = self._lcm(self.p-1, self.q-1)
-
-        self.e = self._coprimeGen(lambda_n) # public exponent
-        self.d = self._multpInv(self.e, lambda_n) # private exponent
-
-        return None
+    def get_c_message(self):
+        return hex(self.c_message)
