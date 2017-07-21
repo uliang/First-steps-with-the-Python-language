@@ -20,8 +20,14 @@ class RSA(object):
         self.n = None
         self.e = None
         self.__d = None
-        self.message = None
         self.c_message = None
+        
+    @property
+    def d(self):
+        _d = self.__d
+        if self.__d is not None:
+            self.__d = None
+        return _d
 
     @staticmethod
     def _gcd(m, n):
@@ -98,15 +104,14 @@ class RSA(object):
         if message > self.n:
             raise ValueError("Message is too long. Exceeds key length")
 
-        self.message = message
-        self.c_message = pow(self.message, self.e, self.n)
+        self.c_message = pow(message, self.e, self.n)
 
         return None
 
-    def decrypt(self):
-        if self.message is None:
+    def decrypt(self, d):
+        if self.c_message is None:
             raise ValueError("No message to decrypt")
-        return pow(self.c_message, self.__d, self.n)
+        return pow(self.c_message, d, self.n)
 
     def get_public_key(self):
         return (self.e, self.n)
