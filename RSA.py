@@ -34,23 +34,26 @@ class RSA(object):
 
     @staticmethod
     def _gcd(m, n):
-        r = [m, n, m%n]
-        s = [None, 1, 0]
-        t = [None, 0, 1]
+        r0, r1 = m, n
+        s0, s1 = 1, 0
+        t0, t1 = 0, 1
+        q, r = divmod(r0, r1)
 
-        while True:
-            q = r[0]//r[1]
-            s = [s[1], s[2], s[1] - q*s[2]]
-            t = [t[1], t[2], t[1] - q*t[2]]
+        while r != 0:
+            r0, r1 = r1, r
+            s0, s1 = s1, s0 - q*s1
+            t0, t1 = t1, t0 - q*t1
+            q, r = divmod(r0, r1)
+        
+        assert m*s1+n*t1 == r1
 
-            if r[2] == 0:
-                break
-
-            r = [r[1], r[2], r[1]%r[2]]
-
-        if s[1] < 0:
-            s[1] = s[1] + n
-        return r[1], s[1], t[1]
+        if s1< 0:
+            s1 += n
+                
+        if t1 < 0:
+            t1 += m
+        
+        return r1, s1, t1
 
     @staticmethod
     def _coprimeGen(n):
@@ -73,25 +76,28 @@ class RSA(object):
         """
         Returns x^-1 mod n
         """
-        r, s, _ = self._gcd(x, n)
+        r, _, t = self._gcd(n, x)
         if r != 1:
             raise ValueError("{} and {} are not coprime".format(x, n))
         else:
-            return long(s)
+            return long(t)
 
     def _lcm(self, x, y):
-        m, _, _ = self._gcd(x, y)
-        return x*y/m
+        d, _, _ = self._gcd(x, y)
+        return x*y/d
 
     def keygen(self, N):
         """
         Randomly generates cryptographically insecure key pairs
         with modulus between 2N-2 to 2N digits.
         """
-        p = randprime(10**(N-1), 10**N)
-        q = randprime(10**(N-1), 10**N)
+        while True:
+            p = randprime(10**(N-1), 10**N)
+            q = randprime(10**(N-1), 10**N)
+            if p > q:
+                break
         self.n = p*q
-
+        
         lambda_n = self._lcm(p-1, q-1)
         
         if lambda_n < 1e4:
