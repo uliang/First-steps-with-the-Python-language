@@ -40,10 +40,12 @@ class RSA(object):
         q, r = divmod(r0, r1)
 
         while r != 0:
+#           print((r1, s1, t1))
             r0, r1 = r1, r
             s0, s1 = s1, s0 - q*s1
             t0, t1 = t1, t0 - q*t1
             q, r = divmod(r0, r1)
+#           print(q)
         
         assert m*s1+n*t1 == r1
 
@@ -84,18 +86,15 @@ class RSA(object):
 
     def _lcm(self, x, y):
         d, _, _ = self._gcd(x, y)
-        return x*y/d
+        return x*y//d
 
     def keygen(self, N):
         """
         Randomly generates cryptographically insecure key pairs
         with modulus between 2N-2 to 2N digits.
         """
-        while True:
-            p = randprime(10**(N-1), 10**N)
-            q = randprime(10**(N-1), 10**N)
-            if p > q:
-                break
+        p = randprime(10**(N-1), 10**N)
+        q = randprime(10**(N-1), 10**N)
         self.n = p*q
         
         lambda_n = self._lcm(p-1, q-1)
