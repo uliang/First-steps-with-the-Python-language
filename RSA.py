@@ -62,7 +62,7 @@ class RSA(object):
         p = randprime(1e4, min(n, 1e6))
 
         while p%n == 0:
-            p = randprime(2, n)
+            p = randprime(1e4, min(n, 1e6))
             if i > max_iter:
                 raise RuntimeError("number coprime to {}".format(n)
                                    + " not found after max allowed iteration")
@@ -86,10 +86,10 @@ class RSA(object):
     def keygen(self, N):
         """
         Randomly generates cryptographically insecure key pairs
-        with modulus between 2N-1 to 2N bits.
+        with modulus between 2N-2 to 2N digits.
         """
-        p = randprime(2**(N-1), 2**N)
-        q = randprime(2**(N-1), 2**N)
+        p = randprime(10**(N-1), 10**N)
+        q = randprime(10**(N-1), 10**N)
         self.n = p*q
 
         lambda_n = self._lcm(p-1, q-1)
