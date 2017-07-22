@@ -59,7 +59,7 @@ class RSA(object):
         """
         max_iter = 1000
         i = 0
-        p = randprime(2, n)
+        p = randprime(1e4, min(n, 1e6))
 
         while p%n == 0:
             p = randprime(2, n)
@@ -93,12 +93,19 @@ class RSA(object):
         self.n = p*q
 
         lambda_n = self._lcm(p-1, q-1)
+        
+        if lambda_n < 1e4:
+            raise ValueError("modulus is too short")
 
         self.e = self._coprimeGen(lambda_n) # public exponent
         self.__d = self._multpInv(self.e, lambda_n) # private exponent
 
         return None
+            
+    def get_public_key(self):
+        return (self.e, self.n)
 
+'''
     def encrypt(self, message):
 
         if type(message) is not int and type(message) is not long:
@@ -115,9 +122,7 @@ class RSA(object):
         if self.c_message is None:
             raise ValueError("No message to decrypt")
         return pow(self.c_message, d, self.n)
-
-    def get_public_key(self):
-        return (self.e, self.n)
-
+  
     def get_c_message(self):
         return hex(self.c_message)
+'''
