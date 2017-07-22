@@ -100,6 +100,8 @@ class RSA(object):
         self.e = self._coprimeGen(lambda_n) # public exponent
         self.__d = self._multpInv(self.e, lambda_n) # private exponent
 
+        assert (self.e*self.__d)% lambda_n == 1
+
         return None
             
     def get_public_key(self):
