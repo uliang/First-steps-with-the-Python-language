@@ -11,7 +11,10 @@ Email : tang_u_liang@sp.edu.sg
 from random import randint
 from sympy import randprime
 from numpy import floor, sqrt
+import sys
 
+if sys.version_info > (3,):
+    long = int
 
 class RSA(object):
 
