@@ -3,6 +3,9 @@ Introduction to base python and programming constructs
 
 This the jupyter notebook for a two day course in Python for Data visualization and analysis. The material here covers basic Python programming concepts. 
 
+In the second day, we cover the usage of `matplotlib` to create scientific 
+visualisations. 
+
 ## Contents
 
 ### Unit 1.1
@@ -25,3 +28,11 @@ This the jupyter notebook for a two day course in Python for Data visualization 
 1. Anonymous functions. The `lambda` keyword. 
 1. Built in Python functions: `zip` and `enumerate`.
 1. List comprehension. 
+
+### Unit 3.1
+1. Introducing basic function of the `plot` function. 
+1. Using `plot` to create time series plots and scatterplots.
+1. Use `matplotlib` marker codes to customize our graph. 
+1. Use `color`, `label` and `alpha` keyword arguments to customize plots. 
+1. Explain the basic objects of `matplotlib`, the `figure` and `axes` class 
+and how to instantiate them. 
